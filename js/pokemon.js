@@ -26,6 +26,7 @@ function seleccionarMascotaJugador() {
     let hipodogeSelect=document.getElementById("hipodoge").checked;
     let capipepoSelect=document.getElementById("capipepo").checked;
     let ratigueyaSelect=document.getElementById("ratigueya").checked;
+
     let mascotaJugador=document.getElementById(`mokemonJugador`);
     let jugadorVidas=document.getElementById("vidasJugador");
     jugadorVidas.innerHTML=vidasJugador;
@@ -43,7 +44,7 @@ function seleccionarMascotaJugador() {
     }
     seleccionarMascotaPC();
     let seccionMostrarAtaque=document.getElementById("selection-atack");
-    seccionMostrarAtaque.style.display = 'block'; // muestra
+    seccionMostrarAtaque.style.display = 'flex'; // muestra
     let seccionMostrarMascota=document.getElementById("selection-mokemon");
     seccionMostrarMascota.style.display="none"; 
 }
@@ -96,9 +97,9 @@ function ataqueTierra(){
 
 function verificarVidas (){
     if(vidasJugador==0){
-        mostrarMensajeFinal("Perdiste!");
+        mostrarMensajeFinal("OHHH Perdiste!");
     }else if(vidasEnemigo == 0){
-        mostrarMensajeFinal("Ganaste!!!");
+        mostrarMensajeFinal("SIIIII Ganaste!!!");
     }
     let botonFuego=document.getElementById("boton-fuego");
     botonFuego.disabled=true;
@@ -113,10 +114,11 @@ function verificarVidas (){
 }
 
 function mostrarMensajeFinal(resultado){
- seccionMensaje=document.getElementById("mensaje");
- let parrafo = document.createElement("p");
- parrafo.innerHTML=("Partida finalizada! : "+resultado );
- seccionMensaje.appendChild(parrafo);
+ seccionMensaje=document.getElementById("resultado");
+ //let mensajeFinal=document.createElement("p");
+ seccionMensaje.innerHTML=resultado ;
+ //seccionMensaje.appendChild(mensajeFinal);
+
 }
 
 function seleccionAtaquePC(){
@@ -132,15 +134,21 @@ function seleccionAtaquePC(){
     
 }
 function mostrarMensaje(){
- seccionMensaje=document.getElementById("mensaje");
- console.log(vidasEnemigo)
-    
- let parrafo = document.createElement("p");
- let resultado = combate();
- 
- parrafo.innerHTML=("Tu mascota atacó con "+ataqueJugador+", las mascota del enemigo atacó con "+ataqueEnemigo+" - "+ resultado );
+ //resultado
+    seccionResultado=document.getElementById("resultado");    
+    let resultado = combate();
+    seccionResultado.innerHTML= resultado;
 
- seccionMensaje.appendChild(parrafo);
+//ataque jugador
+    seccionAtaquejugador=document.getElementById("ataque-jugador");
+    parrafoAtaqueJugador=document.createElement("p");
+    parrafoAtaqueJugador.innerHTML=ataqueJugador;
+    seccionAtaquejugador.appendChild(parrafoAtaqueJugador);
+//ataque enemigo
+seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
+    parrafoAtaqueEnemigo=document.createElement("p");
+    parrafoAtaqueEnemigo.innerHTML=ataqueEnemigo;
+    seccionAtaqueEnemigo.appendChild(parrafoAtaqueEnemigo);
 }
 
 

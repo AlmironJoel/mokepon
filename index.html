@@ -8,43 +8,59 @@
 </head>
 <body>
     <section class="titulo">
-        <h1>Mokemon 🔥💧🌱</h1>
+        <h1>Battler Mokemon</h1>
     </section>
     
     <section id="selection-mokemon">     
         <h2>Selecciona mokemon</h2>
-        
-        <label class="card-mokepon" for="hipodoge">Hipodoge</label>
-        <input type="radio" name="mascota" id="hipodoge">
-        
-        <label class="card-mokepon" for="capipepo">Capipepo</label>
-        <input type="radio" name="mascota" id="capipepo">
-        
-        <label class="card-mokepon" for="ratigueya">Ratigueya</label>
-        <input type="radio" name="mascota" id="ratigueya">
+        <div class="cards">
+           <div class="card-mokepon"> 
+            <label for="hipodoge">Hipodoge</label>
+            <img src="/img/hipodogue.png" alt="hipodoge">
+            <input type="radio" name="mascota" id="hipodoge">
+            </div>
 
+            <div class="card-mokepon">
+            <label  for="capipepo">Capipepo</label>
+            <img src="/img/capipepo.png" alt="capipepo">
+            <input type="radio" name="mascota" id="capipepo">
+            </div>
+
+            <div class="card-mokepon">
+            <label  for="ratigueya">Ratigueya</label>
+            <img src="/img/ratigueya.png" alt="ratigueya">
+            <input type="radio" name="mascota" id="ratigueya">
+            </div>
+        </div>
         <button class="button-select-mokepon" id="boton-mascota">SELECCIONAR mokemon</button>
-
     </section>
 
     <section id="selection-atack">
-
- <h2>Elige tu ataque:</h2>
-        <p>Tu mascota <span id="mokemonJugador"> </span> tiene <span id="vidasJugador"></span> vidas</p>
-        <p>Las mascota <span id="mokemonEnemigo"></span> del enemigo tiene <span id="vidasEnemigo"></span> vidas</p>
-        <section>
-            <button id="boton-fuego">Fuego 🔥</button>
-            <button id="boton-agua">Agua 💧</button>
-            <button id="boton-tierra">Tierra 🌱</button>
-        </section>
-    </section>
-
-    <section id="mensaje">
-
-    </section>
+    <h2>Elige tu ataque:</h2>
     
-    <section>
-        <button id="reiniciar">REINICIAR</button>
+        <div class="botones"><!--botones -->
+            <button class="boton-ataque" id="boton-fuego">Fuego 🔥</button>
+            <button class="boton-ataque" id="boton-agua">Agua 💧</button>
+            <button class="boton-ataque" id="boton-tierra">Tierra 🌱</button>
+        </div>
+
+        <div class="notificaciones">
+            <div id="resultado">
+            </div>
+            <div>
+                <button class="boton-reinicio" id="reiniciar">REINICIAR</button>
+            </div>
+        </div>
+            <div id="ataque-jugador">
+            </div>
+            <div id="ataque-enemigo">
+
+        </div>
+
+        <div>
+            <p>Tu mascota <span id="mokemonJugador"> </span> tiene <span id="vidasJugador"></span> vidas</p>
+            <p>Las mascota <span id="mokemonEnemigo"></span> del enemigo tiene <span id="vidasEnemigo"></span> vidas</p>
+        </div>
     </section>
 
     <script src="./js/pokemon.js"></script>
