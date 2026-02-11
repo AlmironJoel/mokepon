@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mokemon</title>
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet"  href="./style.css">
 </head>
 <body>
     <section class="titulo">
@@ -14,23 +14,24 @@
     <section id="selection-mokemon">     
         <h2>Selecciona mokemon</h2>
         <div class="cards">
-           <div class="card-mokepon"> 
-            <label for="hipodoge">Hipodoge</label>
-            <img src="/img/hipodogue.png" alt="hipodoge">
+ 
             <input type="radio" name="mascota" id="hipodoge">
-            </div>
+                <label class="card-mokepon" for="hipodoge">
+                    <p>Hipodoge</p>
+                    <img src="/img/hipodogue.png" alt="hipodoge">
+                </label>
 
-            <div class="card-mokepon">
-            <label  for="capipepo">Capipepo</label>
-            <img src="/img/capipepo.png" alt="capipepo">
-            <input type="radio" name="mascota" id="capipepo">
-            </div>
+                <input type="radio" name="mascota" id="capipepo">
+                <label class="card-mokepon" for="capipepo">
+                    <p>Capipepo</p>
+                    <img  src="/img/capipepo.png" alt="capipepo">
+                </label>
 
-            <div class="card-mokepon">
-            <label  for="ratigueya">Ratigueya</label>
-            <img src="/img/ratigueya.png" alt="ratigueya">
-            <input type="radio" name="mascota" id="ratigueya">
-            </div>
+                <input type="radio" name="mascota" id="ratigueya">
+                <label class="card-mokepon" for="ratigueya">
+                    <p>Ratigueya</p>
+                    <img src="/img/ratigueya.png" alt="ratigueya">
+                </label>
         </div>
         <button class="button-select-mokepon" id="boton-mascota">SELECCIONAR mokemon</button>
     </section>
@@ -45,22 +46,28 @@
         </div>
 
         <div class="notificaciones">
-            <div id="resultado">
-            </div>
+            <p id="resultado">
+                Muchas suerte!
+            </p>
             <div>
                 <button class="boton-reinicio" id="reiniciar">REINICIAR</button>
             </div>
         </div>
-            <div id="ataque-jugador">
+        
+        <div class="ataques"><!-- contenedor vidas,mascota y ataque -->
+            <div class="contenido-ataques">
+                <h2>Jugador</h2>
+                <p class="mokemonJugador" id="mokemonJugador"> </p>
+                <p class="vidas" id="vidasJugador"></p>
+                <div class="ataqueJugador" id="ataque-jugador"></div>
             </div>
-            <div id="ataque-enemigo">
-
-        </div>
-
-        <div>
-            <p>Tu mascota <span id="mokemonJugador"> </span> tiene <span id="vidasJugador"></span> vidas</p>
-            <p>Las mascota <span id="mokemonEnemigo"></span> del enemigo tiene <span id="vidasEnemigo"></span> vidas</p>
-        </div>
+            <div class="contenido-ataques">
+                <h2>PC</h2>
+                <p id="mokemonEnemigo"></p>
+                <p class="vidas" id="vidasEnemigo"></p>
+                <div id="ataque-enemigo"></div>
+            </div>
+        </div><!-- contenedor vidas,mascota y ataque -->
     </section>
 
     <script src="./js/pokemon.js"></script>

@@ -1,57 +1,78 @@
+//Punteros de HTML
+//IniciarJuego()
+let seccionMostrarAtaque=document.getElementById("selection-atack");//seleccionarMascotaJugador()
+let seccionMostrarReinicio=document.getElementById("reiniciar");
+let botonMascotaJugador = document.getElementById('boton-mascota');
+let botonFuego=document.getElementById("boton-fuego");//verificarVidas()
+let botonAgua=document.getElementById("boton-agua");//verificarVidas()
+let botonTierra=document.getElementById("boton-tierra");//verificarVidas()
+let botonReiniciar=document.getElementById("reiniciar");
+//seleccionarMascotaJugador()
+let mascotaJugador=document.getElementById(`mokemonJugador`);
+let jugadorVidas=document.getElementById("vidasJugador");
+let pcVidas=document.getElementById("vidasEnemigo");
+let seccionMostrarMascota=document.getElementById("selection-mokemon");
+
+//seleccionarMascotaPC
+let mokemonPC = document.getElementById("mokemonEnemigo");
+
+//mostrarMensajeFinal()
+ seccionMensaje=document.getElementById("resultado");
+//mostrarMensaje()
+seccionResultado=document.getElementById("resultado");
+seccionAtaquejugador=document.getElementById("ataque-jugador");
+seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
+//combate()
+let vidasJ=document.getElementById("vidasJugador");
+let vidasPC=document.getElementById("vidasEnemigo");
+
 let ataqueJugador;
 let ataqueEnemigo;
 let vidasJugador=3;
 let vidasEnemigo=3;
 function iniciarJuego() {
-    let seccionMostrarAtaque=document.getElementById("selection-atack");
     seccionMostrarAtaque.style.display = 'none'; // Oculta ataques
-
-    let seccionMostrarReinicio=document.getElementById("reiniciar");
     seccionMostrarReinicio.style.display = 'none'; // ocultar reinicio
     //Mascota
-    let botonMascotaJugador = document.getElementById('boton-mascota');
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador);
-    let botonFuego=document.getElementById("boton-fuego");
     botonFuego.addEventListener("click",ataqueFuego);
-    let botonAgua=document.getElementById("boton-agua");
     botonAgua.addEventListener("click",ataqueAgua);
-    let botonTierra=document.getElementById("boton-tierra");
     botonTierra.addEventListener("click",ataqueTierra);
 
-    let botonReiniciar=document.getElementById("reiniciar");
     botonReiniciar.addEventListener("click",reiniciarJuego);
 }
 
 function seleccionarMascotaJugador() {
+    jugadorVidas.innerHTML=vidasJugador;
+    pcVidas.innerHTML=vidasEnemigo
     let hipodogeSelect=document.getElementById("hipodoge").checked;
     let capipepoSelect=document.getElementById("capipepo").checked;
     let ratigueyaSelect=document.getElementById("ratigueya").checked;
 
-    let mascotaJugador=document.getElementById(`mokemonJugador`);
-    let jugadorVidas=document.getElementById("vidasJugador");
-    jugadorVidas.innerHTML=vidasJugador;
-    let pcVidas=document.getElementById("vidasEnemigo");
-    pcVidas.innerHTML=vidasEnemigo
-
+    if(!hipodogeSelect && !capipepoSelect && !ratigueyaSelect){
+     alert("Necesitas seleccionar una mascota primero");
+        seccionMostrarAtaque.style.display = 'none'; //no muestra sin primero seleccionar una mascota
+    }   
+    
     if(hipodogeSelect){
         mascotaJugador.innerHTML="Hipodoge";
+        seccionMostrarMascota.style.display="none"; 
+        seccionMostrarAtaque.style.display = 'flex'; // muestra
     }else if(capipepoSelect){
         mascotaJugador.innerHTML="Capipepo";
+        seccionMostrarMascota.style.display="none"; 
+        seccionMostrarAtaque.style.display = 'flex'; // muestra
     } else if(ratigueyaSelect){
         mascotaJugador.innerHTML="Ratigueya";
-    }else{
-     alert("Necesitas seleccionar una mascota primero");   
+        seccionMostrarMascota.style.display="none"; 
+        seccionMostrarAtaque.style.display = 'flex'; // muestra
     }
     seleccionarMascotaPC();
-    let seccionMostrarAtaque=document.getElementById("selection-atack");
-    seccionMostrarAtaque.style.display = 'flex'; // muestra
-    let seccionMostrarMascota=document.getElementById("selection-mokemon");
-    seccionMostrarMascota.style.display="none"; 
+
 }
 
 function seleccionarMascotaPC () {
   let numAleatorio= aleatorio(1,3);
-  let mokemonPC = document.getElementById("mokemonEnemigo");
   if (numAleatorio==1) {
       mokemonPC.innerHTML="Hipodoge"
   }else if (numAleatorio==2){
@@ -101,11 +122,8 @@ function verificarVidas (){
     }else if(vidasEnemigo == 0){
         mostrarMensajeFinal("SIIIII Ganaste!!!");
     }
-    let botonFuego=document.getElementById("boton-fuego");
     botonFuego.disabled=true;
-    let botonAgua=document.getElementById("boton-agua");
     botonAgua.disabled=true;
-    let botonTierra=document.getElementById("boton-tierra");
     botonTierra.disabled=true;
 
     let seccionMostrarReinicio=document.getElementById("reiniciar");
@@ -114,11 +132,7 @@ function verificarVidas (){
 }
 
 function mostrarMensajeFinal(resultado){
- seccionMensaje=document.getElementById("resultado");
- //let mensajeFinal=document.createElement("p");
  seccionMensaje.innerHTML=resultado ;
- //seccionMensaje.appendChild(mensajeFinal);
-
 }
 
 function seleccionAtaquePC(){
@@ -135,17 +149,13 @@ function seleccionAtaquePC(){
 }
 function mostrarMensaje(){
  //resultado
-    seccionResultado=document.getElementById("resultado");    
     let resultado = combate();
     seccionResultado.innerHTML= resultado;
-
 //ataque jugador
-    seccionAtaquejugador=document.getElementById("ataque-jugador");
     parrafoAtaqueJugador=document.createElement("p");
     parrafoAtaqueJugador.innerHTML=ataqueJugador;
     seccionAtaquejugador.appendChild(parrafoAtaqueJugador);
 //ataque enemigo
-seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
     parrafoAtaqueEnemigo=document.createElement("p");
     parrafoAtaqueEnemigo.innerHTML=ataqueEnemigo;
     seccionAtaqueEnemigo.appendChild(parrafoAtaqueEnemigo);
@@ -154,8 +164,6 @@ seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
 
 function combate (){
     let resultado="";
-    let vidasJ=document.getElementById("vidasJugador");
-    let vidasPC=document.getElementById("vidasEnemigo");
 
     if(ataqueJugador==ataqueEnemigo){
         resultado="empate";
