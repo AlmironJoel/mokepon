@@ -25,6 +25,39 @@ seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
 //combate()
 let vidasJ=document.getElementById("vidasJugador");
 let vidasPC=document.getElementById("vidasEnemigo");
+// ? ////////////////////////////////////////////////////////////////////////
+//clase
+class Mokepon {
+    constructor(nombre,vida,foto){
+        this.nombre=nombre;
+        this.vida=vida;
+        this.foto=foto;
+        this.ataques=[];
+    }
+}
+let capipepo=new Mokepon("Capipepo",5,"/img/capipepo.png");
+let hipodoge=new Mokepon("Hipodoge",2,"/img/hipodogue.png");
+let ratigueya=new Mokepon("Ratigueya",4,"/img/ratigueya.png");
+
+let mokepones=[];
+mokepones.push(capipepo,hipodoge,ratigueya);
+console.log(mokepones);
+
+capipepo.ataques.push(
+    { nombre: 'Agua', id: "boton-agua" },
+    { nombre: 'Fuego', id: "boton-fuego" },
+    { nombre: "Tierra", id: "boton-tierra" }
+)
+hipodoge.ataques.push(
+    { nombre:'Agua', id: "boton-agua" },
+    { nombre:'Fueg', id: "boton-fuego" },
+    { nombre: "Tierra", id: "boton-tierra" }
+)
+ratigueya.ataques.push(
+    { nombre:'Agua', id: "boton-agua" },//0
+    { nombre:'Fuego', id: "boton-fuego" },//1
+    { nombre: "Tierra", id: "boton-tierra" }//2
+)
 
 let ataqueJugador;
 let ataqueEnemigo;
