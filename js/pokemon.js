@@ -1,30 +1,32 @@
 //Punteros de HTML
 //IniciarJuego()
-let seccionMostrarAtaque=document.getElementById("selection-atack");//seleccionarMascotaJugador()
-let seccionMostrarReinicio=document.getElementById("reiniciar");
-let botonMascotaJugador = document.getElementById('boton-mascota');
-let botonFuego=document.getElementById("boton-fuego");//verificarVidas()
-let botonAgua=document.getElementById("boton-agua");//verificarVidas()
-let botonTierra=document.getElementById("boton-tierra");//verificarVidas()
-let botonReiniciar=document.getElementById("reiniciar");
+const seccionMostrarAtaque=document.getElementById("selection-atack");//seleccionarMascotaJugador()
+const seccionMostrarReinicio=document.getElementById("reiniciar");
+const botonMascotaJugador = document.getElementById('boton-mascota');
+
+const botonReiniciar=document.getElementById("reiniciar");
 //seleccionarMascotaJugador()
-let mascotaJugador=document.getElementById(`mokemonJugador`);
-let jugadorVidas=document.getElementById("vidasJugador");
-let pcVidas=document.getElementById("vidasEnemigo");
-let seccionMostrarMascota=document.getElementById("selection-mokemon");
+const mascotaJugador=document.getElementById(`mokemonJugador`);
+const jugadorVidas=document.getElementById("vidasJugador");
+const pcVidas=document.getElementById("vidasEnemigo");
+const seccionMostrarMascota=document.getElementById("selection-mokemon");
 
 //seleccionarMascotaPC
-let mokemonPC = document.getElementById("mokemonEnemigo");
+const mokemonPC = document.getElementById("mokemonEnemigo");
 
 //mostrarMensajeFinal()
- seccionMensaje=document.getElementById("resultado");
+ const seccionMensaje=document.getElementById("resultado");
 //mostrarMensaje()
-seccionResultado=document.getElementById("resultado");
-seccionAtaquejugador=document.getElementById("ataque-jugador");
-seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
+const seccionResultado=document.getElementById("resultado");
+const seccionAtaquejugador=document.getElementById("ataque-jugador");
+const seccionAtaqueEnemigo=document.getElementById("ataque-enemigo");
 //combate()
-let vidasJ=document.getElementById("vidasJugador");
-let vidasPC=document.getElementById("vidasEnemigo");
+const vidasJ=document.getElementById("vidasJugador");
+const vidasPC=document.getElementById("vidasEnemigo");
+//puntero renderizado
+const tarjetasMokepones=document.getElementById("tarjetas-mokepones")
+//puntero renderizado ataques
+const botonesAtaques=document.getElementById("botones-de-ataque");
 // ? ////////////////////////////////////////////////////////////////////////
 //clase
 class Mokepon {
@@ -41,36 +43,67 @@ let ratigueya=new Mokepon("Ratigueya",4,"/img/ratigueya.png");
 
 let mokepones=[];
 mokepones.push(capipepo,hipodoge,ratigueya);
-console.log(mokepones);
 
 capipepo.ataques.push(
-    { nombre: 'Agua', id: "boton-agua" },
-    { nombre: 'Fuego', id: "boton-fuego" },
-    { nombre: "Tierra", id: "boton-tierra" }
+    { nombre: 'tierra', id: "boton-tierra" },
+    { nombre:'agua', id: "boton-agua" },
+    { nombre: 'fuego', id: "boton-fuego" },
+    { nombre:'agua', id: "boton-agua" },
+    { nombre: "tierra", id: "boton-tierra" }
 )
 hipodoge.ataques.push(
-    { nombre:'Agua', id: "boton-agua" },
-    { nombre:'Fueg', id: "boton-fuego" },
-    { nombre: "Tierra", id: "boton-tierra" }
+    { nombre:'agua', id: "boton-agua" },
+    { nombre:'agua', id: "boton-agua" },
+    { nombre: "fuego", id: "boton-fuego" },
+    { nombre: "tierra", id: "boton-tierra" },
+    { nombre: "fuego", id: "boton-fuego" }
 )
 ratigueya.ataques.push(
-    { nombre:'Agua', id: "boton-agua" },//0
-    { nombre:'Fuego', id: "boton-fuego" },//1
-    { nombre: "Tierra", id: "boton-tierra" }//2
+    { nombre:'agua', id: "boton-agua" },
+    { nombre: "tierra", id: "boton-tierra" },
+    { nombre:'fuego', id: "boton-fuego" },
+    { nombre: "tierra", id: "boton-tierra" },
+    { nombre: "fuego", id: "boton-fuego" }
 )
 
 let ataqueJugador;
 let ataqueEnemigo;
+let hipodogeSelect;
+let capipepoSelect;
+let ratigueyaSelect;
+
+let botonFuego;
+let botonAgua;
+let botonTierra;
+
+let mokemonSeleccionado=hipodoge.ataques;
+let opcionDeMokepon;
+let opcionDeAtaques;
 let vidasJugador=3;
 let vidasEnemigo=3;
 function iniciarJuego() {
     seccionMostrarAtaque.style.display = 'none'; // Oculta ataques
     seccionMostrarReinicio.style.display = 'none'; // ocultar reinicio
-    //Mascota
+    //renderizado de tarjetas
+    mokepones.forEach( (mokepon)=>{
+        opcionDeMokepon=
+    ` <input type="radio" name="mascota" id="${mokepon.nombre}">
+          <label class="card-mokepon" for="${mokepon.nombre}">
+                <p>${mokepon.nombre}</p>
+            <img src=${mokepon.foto} alt="${mokepon.nombre}">
+         </label> `
+
+    tarjetasMokepones.innerHTML+=(opcionDeMokepon)
+
+        hipodogeSelect=document.getElementById("Hipodoge");
+        capipepoSelect=document.getElementById("Capipepo");
+        ratigueyaSelect=document.getElementById("Ratigueya");
+    }
+    )
+
+    
+    //Mascota    
     botonMascotaJugador.addEventListener('click', seleccionarMascotaJugador);
-    botonFuego.addEventListener("click",ataqueFuego);
-    botonAgua.addEventListener("click",ataqueAgua);
-    botonTierra.addEventListener("click",ataqueTierra);
 
     botonReiniciar.addEventListener("click",reiniciarJuego);
 }
@@ -78,42 +111,56 @@ function iniciarJuego() {
 function seleccionarMascotaJugador() {
     jugadorVidas.innerHTML=vidasJugador;
     pcVidas.innerHTML=vidasEnemigo
-    let hipodogeSelect=document.getElementById("hipodoge").checked;
-    let capipepoSelect=document.getElementById("capipepo").checked;
-    let ratigueyaSelect=document.getElementById("ratigueya").checked;
-
-    if(!hipodogeSelect && !capipepoSelect && !ratigueyaSelect){
-     alert("Necesitas seleccionar una mascota primero");
-        seccionMostrarAtaque.style.display = 'none'; //no muestra sin primero seleccionar una mascota
-    }   
-    
-    if(hipodogeSelect){
-        mascotaJugador.innerHTML="Hipodoge";
-        seccionMostrarMascota.style.display="none"; 
-        seccionMostrarAtaque.style.display = 'flex'; // muestra
-    }else if(capipepoSelect){
-        mascotaJugador.innerHTML="Capipepo";
-        seccionMostrarMascota.style.display="none"; 
-        seccionMostrarAtaque.style.display = 'flex'; // muestra
-    } else if(ratigueyaSelect){
-        mascotaJugador.innerHTML="Ratigueya";
-        seccionMostrarMascota.style.display="none"; 
-        seccionMostrarAtaque.style.display = 'flex'; // muestra
+    if(!hipodogeSelect.checked && !capipepoSelect.checked && !ratigueyaSelect.checked){
+        alert("Necesitas seleccionar una mascota primero");
+        return seccionMostrarAtaque.style.display = 'none'; //no muestra sin primero seleccionar una mascota
     }
+    seccionMostrarMascota.style.display="none"; 
+    seccionMostrarAtaque.style.display = 'flex'; // muestra
+    if(hipodogeSelect.checked){
+        mascotaJugador.innerHTML=hipodogeSelect.id;
+        mokemonSeleccionado=hipodogeSelect.id;
+    }else if(capipepoSelect.checked){
+        mascotaJugador.innerHTML=capipepoSelect.id;
+        mokemonSeleccionado=hipodogeSelect.id;
+    } else if(ratigueyaSelect.checked){
+        mascotaJugador.innerHTML=ratigueyaSelect.id;
+        mokemonSeleccionado=hipodogeSelect.id;
+    }
+    extraerAtaques(mokemonSeleccionado);
     seleccionarMascotaPC();
+}
+function extraerAtaques(mokemonSeleccionado){
+    for (let i = 0; i < mokepones.length; i++) {
+        if (mokemonSeleccionado==mokepones[i].nombre) {
+            ataques=mokepones[i].ataques
+            mostrarAtaques(ataques)
+        }      
+    }
+}
 
+function mostrarAtaques(ataques) {
+    //ataques
+    ataques.forEach((ataques)=>{
+        opcionDeAtaques=`
+        <button class="boton-ataque" id=${ataques.id}>${ataques.nombre}</button>
+        `        
+        botonesAtaques.innerHTML+=opcionDeAtaques;
+    })
+
+    botonFuego=document.getElementById("boton-fuego");
+    botonAgua=document.getElementById("boton-agua");
+    botonTierra=document.getElementById("boton-tierra");
+
+    botonFuego.addEventListener("click",ataqueFuego);
+    botonAgua.addEventListener("click",ataqueAgua);
+    botonTierra.addEventListener("click",ataqueTierra);
 }
 
 function seleccionarMascotaPC () {
-  let numAleatorio= aleatorio(1,3);
-  if (numAleatorio==1) {
-      mokemonPC.innerHTML="Hipodoge"
-  }else if (numAleatorio==2){
-      mokemonPC.innerHTML="Capipepo"
-    }else{
-    mokemonPC.innerHTML="Ratigueya"
-  }
-
+  let numAleatorio= aleatorio(0,mokepones.length-1);
+  console.log(numAleatorio)
+ mokemonPC.innerHTML=mokepones[numAleatorio].nombre;
 }
 
 function aleatorio (min,max){
