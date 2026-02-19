@@ -27,6 +27,10 @@ const vidasPC=document.getElementById("vidasEnemigo");
 const tarjetasMokepones=document.getElementById("tarjetas-mokepones")
 //puntero renderizado ataques
 const botonesAtaques=document.getElementById("botones-de-ataque");
+//resultado pelea
+const resultadoPelea=document.getElementById("resultado-pelea")
+console.log(resultadoPelea);
+
 // ? ////////////////////////////////////////////////////////////////////////
 //clase
 class Mokepon {
@@ -35,6 +39,7 @@ class Mokepon {
         this.vida=vida;
         this.foto=foto;
         this.ataques=[];
+        this.victorias=[];
     }
 }
 let capipepo=new Mokepon("Capipepo",5,"/img/capipepo.webp");
@@ -47,12 +52,14 @@ let tucapalma=new Mokepon ("Tucapalma",5,"/img/tucapalma.png")
 let mokepones=[];
 mokepones.push(capipepo,hipodoge,ratigueya,pydos,langostelvis,tucapalma);
 
+let validacion=true;
+let extra={ nombre:'agua', id: "boton-agua" }
 capipepo.ataques.push(
-    { nombre: 'tierra', id: "boton-tierra" },
+    { nombre:'agua', id: "boton-agua" },
     { nombre:'agua', id: "boton-agua" },
     { nombre: 'fuego', id: "boton-fuego" },
     { nombre:'agua', id: "boton-agua" },
-    { nombre: "tierra", id: "boton-tierra" }
+    { nombre: "tierra", id: "boton-tierra" },
 )
 hipodoge.ataques.push(
     { nombre:'agua', id: "boton-agua" },
@@ -81,11 +88,11 @@ tucapalma.ataques.push(
     { nombre:'agua', id: "boton-agua" },
     { nombre: 'fuego', id: "boton-fuego" },
     { nombre:'agua', id: "boton-agua" },
-    { nombre: "tierra", id: "boton-tierra" }
+    { nombre: "agua", id: "boton-agua" }
 )
 langostelvis.ataques.push(
     { nombre: 'tierra', id: "boton-tierra" },
-    { nombre:'agua', id: "boton-agua" },
+    { nombre:'fuego', id: "boton-fuego" },
     { nombre: 'fuego', id: "boton-fuego" },
     { nombre:'agua', id: "boton-agua" },
     { nombre: "tierra", id: "boton-tierra" }
@@ -94,9 +101,13 @@ langostelvis.ataques.push(
 let ataqueJugador=[];//guarda la secuencia de ataques seleccionados.
 let ataqueEnemigo=[];//Guarda secuencia ataques PC.
 let ataqueMokeponPC=[];
+
 let hipodogeSelect;
 let capipepoSelect;
 let ratigueyaSelect;
+let langostelvisSelect;
+let pydosSelect;
+let tucapalmaSelect;
 
 let botonFuego;
 let botonAgua;
@@ -107,7 +118,7 @@ let resultado;
 let resultadoJugador=[];
 let resultadoEnemigo=[];
 
-let mokemonSeleccionado=hipodoge.ataques;
+let mokemonSeleccionado;
 let opcionDeMokepon;
 let opcionDeAtaques;
 let victorias=0;
@@ -129,6 +140,9 @@ function iniciarJuego() {
         hipodogeSelect=document.getElementById("Hipodoge");
         capipepoSelect=document.getElementById("Capipepo");
         ratigueyaSelect=document.getElementById("Ratigueya");
+        tucapalmaSelect=document.getElementById("Tucapalma");
+        langostelvisSelect=document.getElementById("Langostelvis");
+        pydosSelect=document.getElementById("Pydos");
     }
     )
 
@@ -142,29 +156,47 @@ function iniciarJuego() {
 function seleccionarMascotaJugador() {
     jugadorVidas.innerHTML=victorias;
     pcVidas.innerHTML=victoriasEnemigo
-    if(!hipodogeSelect.checked && !capipepoSelect.checked && !ratigueyaSelect.checked){
+
+    if(!hipodogeSelect.checked && !capipepoSelect.checked && !ratigueyaSelect.checked && !tucapalmaSelect.checked && !langostelvisSelect.checked && !pydosSelect.checked ){
         alert("Necesitas seleccionar una mascota primero");
         return seccionMostrarAtaque.style.display = 'none'; //no muestra sin primero seleccionar una mascota
     }
+
     seccionMostrarMascota.style.display="none"; 
     seccionMostrarAtaque.style.display = 'flex'; // muestra
+    
     if(hipodogeSelect.checked){
         mascotaJugador.innerHTML=hipodogeSelect.id;
         mokemonSeleccionado=hipodogeSelect.id;
     }else if(capipepoSelect.checked){
         mascotaJugador.innerHTML=capipepoSelect.id;
-        mokemonSeleccionado=hipodogeSelect.id;
+        mokemonSeleccionado=capipepoSelect.id;
     } else if(ratigueyaSelect.checked){
         mascotaJugador.innerHTML=ratigueyaSelect.id;
-        mokemonSeleccionado=hipodogeSelect.id;
+        mokemonSeleccionado=ratigueyaSelect.id;
+    } else if(langostelvisSelect.checked){
+        mascotaJugador.innerHTML=langostelvisSelect.id;
+        mokemonSeleccionado=langostelvisSelect.id;
+    } else if(pydosSelect.checked){
+        mascotaJugador.innerHTML=pydosSelect.id;
+        mokemonSeleccionado=pydosSelect.id;
+    }else if(tucapalmaSelect.checked){
+        mascotaJugador.innerHTML=tucapalmaSelect.id;
+        mokemonSeleccionado=tucapalmaSelect.id;
     }
+
     extraerAtaques(mokemonSeleccionado);
+    console.log(mokemonSeleccionado);
+    
     seleccionarMascotaPC();
 }
 function extraerAtaques(mokemonSeleccionado){
+
     for (let i = 0; i < mokepones.length; i++) {
         if (mokemonSeleccionado==mokepones[i].nombre) {
             ataques=mokepones[i].ataques
+            mokeVictoria=mokepones[i].victorias
+            
             mostrarAtaques(ataques)
         }      
     }
@@ -210,11 +242,10 @@ function secuenciaAtaques(){
             seleccionAtaquePC()
 
           if (ataqueJugador.length==5) {
-            console.log('entro');
             combate();
             mostrarMensaje()
           }
-          console.log(ataqueEnemigo,ataqueJugador);
+          console.log("jugador",ataqueJugador,"Enemigo",ataqueEnemigo);
         } )
     })
 
@@ -235,10 +266,8 @@ return Math.floor( Math.random() * (max-min+1) + min);
 function verificarVidas (){
     if(victorias>victoriasEnemigo){
         mostrarMensajeFinal("SIIIII Ganaste!!!");
-        console.log(mostrarMensajeFinal);
     }else  if(victorias<victoriasEnemigo){
         mostrarMensajeFinal("OHHH Perdiste!");
-        console.log(mostrarMensajeFinal);
     }else{
         mostrarMensajeFinal("EMPATE!!!...");
     }
@@ -263,56 +292,60 @@ function seleccionAtaquePC(){
   }    
 }
 function mostrarMensaje(){
- //resultado
-    // let resultado = combate();
-    // seccionResultado.innerHTML= resultado;
     console.log('Estamos en mostrar mesanje');
     console.log('Jugador :',resultadoJugador,'Enemigo :',resultadoEnemigo);
     for (let i = 0; i < resultadoJugador.length; i++) {
         //ataque jugador
-            parrafoAtaqueJugador=document.createElement("p");
+           let parrafoAtaqueJugador=document.createElement("p");
             parrafoAtaqueJugador.innerHTML=resultadoJugador[i];
             seccionAtaquejugador.appendChild(parrafoAtaqueJugador);
         //ataque enemigo
-            parrafoAtaqueEnemigo=document.createElement("p");
+          let parrafoAtaqueEnemigo=document.createElement("p");
             parrafoAtaqueEnemigo.innerHTML=resultadoEnemigo[i];
             seccionAtaqueEnemigo.appendChild(parrafoAtaqueEnemigo);
+        //resultado de rondas
+        let parrafoResultadoRonda=document.createElement("p");
+        parrafoResultadoRonda.innerHTML=mokeVictoria[i];
+        resultadoPelea.appendChild(parrafoResultadoRonda);
+
     }
     verificarVidas ()
 }
 
 
 function combate (){
+console.log("victorias",mokeVictoria);
 
 for (let i = 0; i < ataqueJugador.length; i++) {
-    console.log('entro a combate',i);
     if(ataqueJugador[i]==ataqueEnemigo[i]){
         resultado="empate";
+        mokeVictoria[i]="⭕"
         guardarResultado(i);
     }else if(ataqueJugador[i]=="fuego" && ataqueEnemigo[i]=="tierra"){
         resultado="ganaste";
         guardarResultado(i);
-
+        mokeVictoria[i]="✅";
         victorias++;
         vidasJ.innerHTML=victorias;
         
     }else if(ataqueJugador[i]=="tierra"&& ataqueEnemigo[i]=="agua"){
         resultado="ganaste";
+        mokeVictoria[i]="✅";
         guardarResultado(i);
-
         victorias++;
         vidasJ.innerHTML=victorias;
         
     }else if(ataqueJugador[i]=="agua"&& ataqueEnemigo[i]=="fuego"){
         resultado="ganaste";
+        mokeVictoria[i]="✅";
         guardarResultado(i);
-        
         victorias++;
         vidasJ.innerHTML=victorias;
         
     }else{
         resultado="perdiste";
         guardarResultado(i);
+        mokeVictoria[i]="❎"
         victoriasEnemigo++;
         vidasPC.innerHTML=victoriasEnemigo;
     }

@@ -28,8 +28,8 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-sizing: border-box;
     height:auto;
+    box-sizing: border-box;
 }
 
 input{
@@ -68,7 +68,7 @@ input{
 .card-mokepon:hover{
     background-color:var(--color-seleccionVerde);
     height: 155px;
-    width: 155px;
+
 }
 input:checked + label{
     background-color:var(--color-seleccionVerde);
@@ -142,7 +142,7 @@ input:checked + label{
 /*Seccion ataques/vidas y nombre de mokemon*/
 .ataques{
     display: grid;
-    grid-template-columns: 100px 100px;
+    grid-template-columns: 1fr 1fr 1fr;
     gap: 10px;
 }
 .contenido-ataques{
