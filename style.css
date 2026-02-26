@@ -122,12 +122,15 @@ input:checked + label{
     border: 2px solid var(--color-seleccionVerde);
     border-radius: 25px;
     background-color: var(--color-secundario);
-    height: 100px;
-    width: 200px;
+    height: 120px;
+    width: 300px;
     font-size: x-large;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.notificaciones p{
+        margin-inline-start: 10px;
 }
 .boton-reinicio{
     font-family: var(--fuente-principal);
@@ -159,6 +162,19 @@ input:checked + label{
     font-size: x-large;
     margin: auto;
 
+}
+.resultado-rondas{
+        margin-top: 40px;
+}
+#seccion-mapa{
+    flex-direction: column;
+    align-items: center;
+    color: var(--blanco);
+}
+#mapa{
+    border: 3px solid var(--blanco);
+    height: 300px;
+    width: 600px;
 }
 
 /*media queris*/

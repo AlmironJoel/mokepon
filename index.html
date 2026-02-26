@@ -3,20 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mokemon</title>
+    <title>Mokepon</title>
     <link rel="stylesheet"  href="./style.css">
 </head>
 <body>
     <section class="titulo">
-        <h1>Battler Mokemon</h1>
+        <h1>Battler Mokepon</h1>
     </section>
     
     <section id="selection-mokemon">     
-        <h2>Selecciona mokemon</h2>
+        <h2>Selecciona mokepon</h2>
 
         <div id="tarjetas-mokepones" class="cards"></div><!-- renderizado tarjetas -->
 
         <button class="button-select-mokepon" id="boton-mascota">SELECCIONAR mokemon</button>
+    </section>
+
+    <section id="seccion-mapa">
+        <h2>Recorre el mapa</h2>
+        <canvas id="mapa"></canvas>
+        <div class="botones-movimiento">
+            <button id="boton-derecha">derecha</button>
+            <button id="boton-izquierda">izquierda</button>
+            <button id="boton-arriba">arriba</button>
+            <button id="boton-abajo">abajo</button>
+        </div>
     </section>
 
     <section id="selection-atack">
@@ -43,17 +54,15 @@
             </div>
 
             <div class="contenido-ataques">
-                <h2 class="resultado_detalles" >Resultados</h2>
-                <p>Ganada ❎ Perdida✅ empate⭕</p>
-                <div id="resultado-pelea">
-                    
-                </div>
+                    <h2>Resultados</h2>
+                    <p>Ganada ✅ Perdida❎ empate⭕</p>
+                    <div class="resultado-rondas" id="resultado-pelea"></div>
             </div>
 
             <div class="contenido-ataques">
                 <h2>PC</h2>
                 <p id="mokemonEnemigo"></p>
-                <p class="vidas" id="vidasEnemigo"></p>
+                <p class="vidas" id="victoriasEnemigo"></p>
                 <div id="ataque-enemigo"></div>
             </div>
         </div><!-- contenedor vidas,mascota y ataque -->
