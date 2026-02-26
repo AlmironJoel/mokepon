@@ -48,8 +48,8 @@ class Mokepon {
         this.victorias=[];
         this.x = 20; // posición inicial en X
         this.y = 20; // posición inicial en Y
-        this.ancho = 60; // ancho del personaje
-        this.alto = 60; // alto del personaje
+        this.ancho =80; // ancho del personaje
+        this.alto = 80; // alto del personaje
         this.mapaFoto= new Image();//creamos el constructor dentro del obejto para luego pasarle la foto
         this.mapaFoto.src=foto;//insertamos la foto
         this.velocidadX=0;
@@ -140,6 +140,8 @@ let tipoMokeponJugador;
 let tipoMokemonPC;
 let mokemonSeleccionado;
 let mokemonSeleccionadoPC;
+let objetMokeponPJ;
+let objetMokeponPC;
 let opcionDeMokepon;
 let opcionDeAtaques;
 let victorias=0;
@@ -147,6 +149,15 @@ let victoriasEnemigo=0;
 
 let lienzo =mapa.getContext("2d");
 let intervalo;
+let mapaBackground=new Image();
+mapaBackground.src="./img/mokemap.webp"
+
+//ajusta el escalado de img canvas
+const dpr = window.devicePixelRatio || 1;
+mapa.width = mapa.clientWidth * dpr;
+mapa.height = mapa.clientHeight * dpr;
+lienzo.scale(dpr, dpr)
+
 function iniciarJuego() {
     seccionMapa.style.display='none';
     seccionMostrarAtaque.style.display = 'none'; // Oculta ataques
@@ -180,19 +191,7 @@ function iniciarJuego() {
 
 function seleccionarMascotaJugador() {
     seccionMostrarMascota.style.display="none"; 
-
-    seccionMapa.style.display='flex';
     //todo seccionMostrarAtaque.style.display = 'flex'; // muestra 
-    intervalo=setInterval(pintarPersonaje,50)
-    
-    botonDerecha.addEventListener("mouseup",detenerMovimiento)
-    botonDerecha.addEventListener("mousedown",moverDerecha)
-    botonIzquierda.addEventListener("mouseup",detenerMovimiento)
-    botonIzquierda.addEventListener("mousedown",moverIzquierda)
-    botonArriba.addEventListener("mouseup",detenerMovimiento)
-    botonArriba.addEventListener("mousedown",moverArriba)
-    botonAbajo.addEventListener("mouseup",detenerMovimiento)
-    botonAbajo.addEventListener("mousedown",moverAbajo)
     
     jugadorVidas.innerHTML=victorias;
     pcVictorias.innerHTML=victoriasEnemigo
@@ -220,8 +219,13 @@ function seleccionarMascotaJugador() {
         mascotaJugador.innerHTML=tucapalmaSelect.id;
         mokemonSeleccionado=tucapalmaSelect.id;    
     }
+    
     seleccionarMascotaPC();
     extraerAtaques(mokemonSeleccionado);    
+    seccionMapa.style.display='flex';
+    inciarMapa();
+    console.log(mokemonSeleccionadoPC);
+    
 
 }
 
@@ -468,50 +472,95 @@ function reiniciarJuego(){
     location.reload();
 }
 //? Canvas -funciones
+function inciarMapa(){
+    objetMokeponPJ=extrarMokeponObjet(mokemonSeleccionado);
+    objetMokeponPC=extrarMokeponObjet(mokemonSeleccionadoPC);
+    console.log(objetMokeponPC,objetMokeponPJ);
+    
+    intervalo=setInterval(pintarPersonaje,50)
+    
+    botonDerecha.addEventListener("mouseup",detenerMovimiento)
+    botonDerecha.addEventListener("mousedown",moverDerecha)
+    botonIzquierda.addEventListener("mouseup",detenerMovimiento)
+    botonIzquierda.addEventListener("mousedown",moverIzquierda)
+    botonArriba.addEventListener("mouseup",detenerMovimiento)
+    botonArriba.addEventListener("mousedown",moverArriba)
+    botonAbajo.addEventListener("mouseup",detenerMovimiento)
+    botonAbajo.addEventListener("mousedown",moverAbajo)
+    
+    window.addEventListener("keydown",detectarTecla);
+    window.addEventListener("keyup",detenerMovimiento)
+}
+
 function pintarPersonaje (){
-    capipepo.x += capipepo.velocidadX;
-    capipepo.y += capipepo.velocidadY;
+    objetMokeponPJ.x += objetMokeponPJ.velocidadX;
+    objetMokeponPJ.y += objetMokeponPJ.velocidadY;
+    
     lienzo.clearRect(0,0,mapa.width,mapa.height);
 
+    lienzo.drawImage(
+        mapaBackground,
+        0,
+        0,
+        mapa.width,
+        mapa.height
+    )
+
      lienzo.drawImage(
-            capipepo.mapaFoto,
-            capipepo.x,
-            capipepo.y,
-            capipepo.ancho,
-            capipepo.alto
+            objetMokeponPJ.mapaFoto,
+            objetMokeponPJ.x,
+            objetMokeponPJ.y,
+            objetMokeponPJ.ancho,
+            objetMokeponPJ.alto
             )
 }
 
 function detenerMovimiento(){
-    capipepo.velocidadX=0;
+    objetMokeponPJ.velocidadX=0;
 
-    capipepo.velocidadY=0;
+    objetMokeponPJ.velocidadY=0;
 }
 
 function moverDerecha(){
-    console.log(capipepo.x);
-    if (capipepo.x>=0) {
-        capipepo.velocidadX= 5;
-    }
+        objetMokeponPJ.velocidadX= 5;
 }
 function moverIzquierda(){
-    console.log(capipepo.x);
-    if (capipepo.x>=0) {
-        capipepo.velocidadX= -5;
-        
-    }
+        objetMokeponPJ.velocidadX= -5;  
 }
 function moverArriba(){
-    if (capipepo.y>5) {
-        capipepo.velocidadY=5;
-    }
+    
+        objetMokeponPJ.velocidadY=-5;
+    
 }
 function moverAbajo(){
-    if (capipepo.y>5) {
-        capipepo.velocidadY =-5;
+    
+        objetMokeponPJ.velocidadY =5;
+    
+}
+function detectarTecla(e){
+    console.log(e.key)
+    switch (e.key) {
+        case "ArrowUp":
+                moverArriba();
+            break;
+        case "ArrowDown":
+                moverAbajo();
+            break;
+        case "ArrowRight":
+                moverDerecha();
+            break;
+        case "ArrowLeft":
+                moverIzquierda();
+            break;
     }
 }
-
+function extrarMokeponObjet(mokepon){
+    for (let i = 0; i < mokepones.length; i++) {
+        if (mokepon==mokepones[i].nombre) {
+            return mokepones[i];
+        }      
+    }
+}
 
 //todo 
 window.addEventListener("load", iniciarJuego);

@@ -32,3 +32,6 @@ VARIANTE
 //seleccionamos la variable donde tenemos el puntero y llamamos al metodo ".appendChild" que inserta la ETIQUETA JUNTO AL MENSAJE en la seccion seleccionada.
  <seccionMensaje.appendChild(parrafo);>
 ////////////////////////////////////////////////////////////////////////////////////////////
+
+# NOTA .addEventListener 
+cuando se agrega addEventListener , estos retornan por defecto un "evento", el evento es un objeto que podemos inspeccionar y hacer el manejo de ese evento.

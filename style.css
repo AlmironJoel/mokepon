@@ -173,8 +173,8 @@ input:checked + label{
 }
 #mapa{
     border: 3px solid var(--blanco);
-    height: 300px;
-    width: 600px;
+    height: 30rem;
+    width: 40rem;
 }
 
 /*media queris*/
